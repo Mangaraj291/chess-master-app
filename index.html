@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChessMaster - Play Chess Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen">
+        <div class="container">
+            <div class="login-card card">
+                <div class="card__body">
+                    <h1>♔ ChessMaster</h1>
+                    <p>Enter your username to start playing</p>
+                    <div class="form-group">
+                        <input type="text" id="usernameInput" class="form-control" placeholder="Enter username" maxlength="20">
+                    </div>
+                    <button id="loginBtn" class="btn btn--primary btn--full-width">Enter Game</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="screen hidden">
+        <div class="container">
+            <div class="dashboard-header">
+                <div class="user-info">
+                    <h2>Welcome, <span id="usernameDisplay"></span></h2>
+                    <div class="rating-display">
+                        <span class="rating-label">Rating:</span>
+                        <span id="userRating" class="rating-value">1200</span>
+                    </div>
+                </div>
+                <button id="logoutBtn" class="btn btn--outline">Logout</button>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="play-options">
+                    <h3>Play Chess</h3>
+                    <button id="playVsPlayerBtn" class="btn btn--primary btn--full-width">Play vs Player</button>
+                    <button id="playVsComputerBtn" class="btn btn--secondary btn--full-width">Play vs Computer</button>
+                </div>
+
+                <div class="friends-panel card">
+                    <div class="card__body">
+                        <h4>Friends</h4>
+                        <div class="form-group">
+                            <input type="text" id="friendUsernameInput" class="form-control" placeholder="Add friend by username">
+                            <button id="addFriendBtn" class="btn btn--sm btn--primary">Add Friend</button>
+                        </div>
+                        <div id="friendsList" class="friends-list"></div>
+                    </div>
+                </div>
+
+                <div class="game-history card">
+                    <div class="card__body">
+                        <h4>Recent Games</h4>
+                        <div id="gameHistoryList" class="history-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Computer Difficulty Selection -->
+    <div id="difficultyModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Select Difficulty</h3>
+            <div class="difficulty-options">
+                <button id="easyBtn" class="btn btn--outline difficulty-btn" data-difficulty="easy">
+                    <span class="difficulty-name">Easy</span>
+                    <span class="difficulty-desc">Random moves</span>
+                </button>
+                <button id="mediumBtn" class="btn btn--outline difficulty-btn" data-difficulty="medium">
+                    <span class="difficulty-name">Medium</span>
+                    <span class="difficulty-desc">Strategic play</span>
+                </button>
+                <button id="hardBtn" class="btn btn--outline difficulty-btn" data-difficulty="hard">
+                    <span class="difficulty-name">Hard</span>
+                    <span class="difficulty-desc">Expert level</span>
+                </button>
+            </div>
+            <button id="cancelDifficultyBtn" class="btn btn--secondary">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="gameScreen" class="screen hidden">
+        <div class="game-container">
+            <div class="game-sidebar">
+                <div class="game-info">
+                    <div class="players">
+                        <div class="player player-black">
+                            <div class="player-name" id="blackPlayerName">Player 2</div>
+                            <div class="player-rating" id="blackPlayerRating">1200</div>
+                        </div>
+                        <div class="player player-white">
+                            <div class="player-name" id="whitePlayerName">Player 1</div>
+                            <div class="player-rating" id="whitePlayerRating">1200</div>
+                        </div>
+                    </div>
+                    <div class="game-status">
+                        <div id="currentTurn" class="turn-indicator">White to move</div>
+                        <div id="gameTimer" class="timer">10:00</div>
+                    </div>
+                </div>
+
+                <div class="move-history">
+                    <h4>Moves</h4>
+                    <div id="moveList" class="moves-list"></div>
+                </div>
+
+                <div class="chat-section">
+                    <h4>Chat</h4>
+                    <div id="chatMessages" class="chat-messages"></div>
+                    <div class="chat-input">
+                        <input type="text" id="chatInput" class="form-control" placeholder="Type a message...">
+                        <button id="sendChatBtn" class="btn btn--primary btn--sm">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chess-board-container">
+                <div id="chessBoard" class="chess-board"></div>
+                <div class="game-controls">
+                    <button id="resignBtn" class="btn btn--outline">Resign</button>
+                    <button id="drawOfferBtn" class="btn btn--outline">Offer Draw</button>
+                    <button id="backToDashboardBtn" class="btn btn--secondary">Back to Dashboard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Result Modal -->
+    <div id="gameResultModal" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="gameResultTitle">Game Over</h3>
+            <div id="gameResultContent">
+                <div id="gameResult" class="game-result"></div>
+                <div id="ratingChange" class="rating-change"></div>
+            </div>
+            <div class="modal-actions">
+                <button id="analyzeGameBtn" class="btn btn--primary">Analyze Game</button>
+                <button id="newGameBtn" class="btn btn--secondary">New Game</button>
+                <button id="closeResultBtn" class="btn btn--outline">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analysis Screen -->
+    <div id="analysisScreen" class="screen hidden">
+        <div class="container">
+            <div class="analysis-header">
+                <h2>Game Analysis</h2>
+                <button id="backFromAnalysisBtn" class="btn btn--outline">Back to Dashboard</button>
+            </div>
+            
+            <div class="analysis-content">
+                <div class="analysis-board-container">
+                    <div id="analysisBoardContainer" class="chess-board-container">
+                        <div id="analysisBoard" class="chess-board"></div>
+                        <div class="analysis-controls">
+                            <button id="prevMoveBtn" class="btn btn--outline">← Previous</button>
+                            <button id="nextMoveBtn" class="btn btn--outline">Next →</button>
+                            <button id="resetPositionBtn" class="btn btn--secondary">Reset</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="analysis-moves">
+                    <h3>Move Analysis</h3>
+                    <div id="analysisResults" class="analysis-moves-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Online Players Modal -->
+    <div id="onlinePlayersModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Select Opponent</h3>
+            <div id="onlinePlayersList" class="online-players-list"></div>
+            <button id="cancelOnlineBtn" class="btn btn--secondary">Cancel</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
