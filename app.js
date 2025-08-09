@@ -671,7 +671,7 @@ class ChessGame {
             let maxEval = -Infinity;
             for (const move of moves) {
                 this.makeTemporaryMove(move);
-                const eval = this.minimax(depth - 1, alpha, beta, false);
+                const evaluation = this.minimax(depth - 1, alpha, beta, false);
                 this.undoTemporaryMove(move);
 
                 if (eval.score > maxEval) {
@@ -686,7 +686,7 @@ class ChessGame {
             let minEval = Infinity;
             for (const move of moves) {
                 this.makeTemporaryMove(move);
-                const eval = this.minimax(depth - 1, alpha, beta, true);
+                const evaluation = this.minimax(depth - 1, alpha, beta, true);
                 this.undoTemporaryMove(move);
 
                 if (eval.score < minEval) {
